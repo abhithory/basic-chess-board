@@ -63,13 +63,13 @@ path {
 }
 
 .black {
-    stroke: #000000;
     stroke-width: 8px;
-    fill: #E5E4E2;
+    fill: black;
+    stroke: #E5E4E2;
 }
 
 .white {
-    fill: black;
-    stroke: #E5E4E2;
+    stroke: #000000;
+    fill: #E5E4E2;
     stroke-width: 8px;}
 

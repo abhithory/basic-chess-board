@@ -49,7 +49,7 @@ let dragStartBoxIndex;
 const boxDragStart = (e) => {
     console.log("dragStart");
     dragStartElement = e.target;
-    dragStartBoxIndex = e.target.parentNode;
+    dragStartBoxIndex = e.target.parentNode.getAttribute("chess-box-id");
     // console.log("dragStart",e.target.parentNode.getAttribute(""));
 }
 
@@ -60,13 +60,24 @@ const onBoxDragOver = (e) => {
 const onBoxDrop = (e) => {
     e.stopPropagation()
     console.log("drop",e.target);
-    if (e.target.classList.contains("chess-piece")) {
-        e.target.parentNode.append(dragStartElement)
-        e.target.remove()
-    } else {
-        e.target.append(dragStartElement)
-    }
-    changePlayer();
+    console.log(dragStartElement);
+    const correctGo = dragStartElement.firstChild.classList.contains(playerGo);
+    const taken = e.target.classList.contains("chess-piece");
+    const valid = isMoveValid(e.target);
+    const opponentGo = playerGo === "black" ? "white" : "black";
+    const takenByOpponent = e.target.firstChild?.classList?.contains(opponentGo);
+    // console.log("correctGo",correctGo);
+    // console.log("taken",taken);
+    // console.log("opponentGo",opponentGo);
+    // console.log("takenByOpponent",takenByOpponent);
+
+    // if (e.target.classList.contains("chess-piece")) {
+    //     e.target.parentNode.append(dragStartElement)
+    //     e.target.remove()
+    // } else {
+    //     e.target.append(dragStartElement)
+    // }
+    // changePlayer();
 }
 
 const allChessBoardBoxes = document.querySelectorAll("#chess-board .chess-board-box");
@@ -95,4 +106,13 @@ const reversBoxIds = (revert = false) => {
             box.setAttribute("chess-box-id", 63 - i);
         }
     })
+}
+
+const isMoveValid = (target) => {
+    const piece = dragStartElement.id;
+    const startId = Number(dragStartBoxIndex);
+    const targetId = Number(target.getAttribute("chess-box-id")) || Number(target.parentNode.getAttribute("chess-box-id"))
+    console.log("currentPiece",piece);
+    console.log("startId", startId);
+    console.log("targetId", targetId);
 }
