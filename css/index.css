@@ -18,7 +18,7 @@ body {
     align-items: center;
 }
 
-.chess-board {
+#chess-board {
     width: 480px;
     height: 480px;
     background-color: #485461;
@@ -26,62 +26,50 @@ body {
     flex-wrap: wrap;
 }
 
-.chess-board-box {
-    width: 60px;
-    height: 60px;
-}
+
 
 .box-bg-1 {
     background: #fffee5;
+    
 }
 
 .box-bg-2 {
     background: #000080;
 }
 
-.chess-piece {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
+.chess-board-box {
+    width: 60px;
+    height: 60px;
+    position: relative;
+    z-index: 1;
+}
+.chess-piece {
+    /* display: flex;
+    justify-content: center;
+    align-items: center;  */
+    z-index: 9;
 }
 
-/* Classic Approach:
-
-For one player's pieces, use black (#000000) or very dark gray (#111111).
-For the other player's pieces, you can use a slightly lighter shade of gray such as charcoal gray (#333333) or dark slate gray (#2F4F4F).
-This classic combination maintains a clear contrast between the pieces and the chessboard.
-Earthy Approach:
-
-For one player's pieces, use a deep brown color (#8B4513) or a rich chocolate brown (#D2691E).
-For the other player's pieces, use a warm tan color (#D2B48C) or a sandy brown shade (#F4A460).
-This earthy color combination creates a natural and warm aesthetic on the chessboard. */
-
-.chess-piece>svg {
+.chess-board-box svg {
     width: 50px;
     height: 50px;
     margin: 5px;
-
+    position: relative;
+    z-index: -9;
+}
+path {
+    z-index: -10;
 }
 
-.piece-color-1 {
+.black {
     stroke: #000000;
     stroke-width: 8px;
     fill: #E5E4E2;
 }
 
-.piece-color-2 {
+.white {
     fill: black;
     stroke: #E5E4E2;
     stroke-width: 8px;}
 
-/* Black and White:
-Silver and Gold:
-
-For one player, use silver-colored pieces (#C0C0C0) on the light gray boxes (#D3D3D3).
-For the other player, use gold-colored pieces (#FFD700) on the dark blue boxes (#000080).
-This combination provides a visually distinct contrast and adds an elegant touch to the chessboard.
-Bronze and Platinum:
-
-For one player, use bronze-colored pieces (#CD7F32) on the light gray boxes (#D3D3D3).
-For the other player, use platinum-colored pieces (#E5E4E2) on the dark blue boxes (#000080).*/
