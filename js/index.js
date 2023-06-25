@@ -1,6 +1,7 @@
 import { rock, knight, bishop, king, queen,pawn } from './allAssests.js';
 
 let playerGo = "black"; // 0 => black
+const playGoElement = document.querySelector("#playerGo");
 
 const ChessBoard = document.querySelector("#chess-board");
 
@@ -17,6 +18,8 @@ const chessPices = [
 
 
 function createChessBoard(){
+    playGoElement.innerHTML = playerGo;
+
     chessPices.forEach((piece,i)=>{
         const onePiece = document.createElement("div");
         onePiece.innerHTML = piece;
@@ -59,25 +62,25 @@ const onBoxDragOver = (e) => {
 
 const onBoxDrop = (e) => {
     e.stopPropagation()
-    console.log("drop",e.target);
-    console.log(dragStartElement);
     const correctGo = dragStartElement.firstChild.classList.contains(playerGo);
-    const taken = e.target.classList.contains("chess-piece");
-    const valid = isMoveValid(e.target);
-    const opponentGo = playerGo === "black" ? "white" : "black";
-    const takenByOpponent = e.target.firstChild?.classList?.contains(opponentGo);
+    // const taken = e.target.classList.contains("chess-piece");
+    // const valid = isMoveValid(e.target);
+    // const opponentGo = playerGo === "black" ? "white" : "black";
+    // const takenByOpponent = e.target.firstChild?.classList?.contains(opponentGo);
     // console.log("correctGo",correctGo);
     // console.log("taken",taken);
     // console.log("opponentGo",opponentGo);
     // console.log("takenByOpponent",takenByOpponent);
 
-    // if (e.target.classList.contains("chess-piece")) {
-    //     e.target.parentNode.append(dragStartElement)
-    //     e.target.remove()
-    // } else {
-    //     e.target.append(dragStartElement)
-    // }
-    // changePlayer();
+    if (correctGo) {   
+        if (e.target.classList.contains("chess-piece")) {
+            e.target.parentNode.append(dragStartElement)
+            e.target.remove()
+        } else {
+            e.target.append(dragStartElement)
+        }
+        changePlayer();
+    }
 }
 
 const allChessBoardBoxes = document.querySelectorAll("#chess-board .chess-board-box");
@@ -90,11 +93,13 @@ allChessBoardBoxes.forEach((box)=>{
 function changePlayer(){
     if (playerGo === "black") {
         playerGo = "white";
+        
         reversBoxIds()
     } else {
         playerGo = "black";
         reversBoxIds(true)
     }
+    playGoElement.innerHTML = playerGo;
 }
 
 const reversBoxIds = (revert = false) => {
@@ -115,4 +120,27 @@ const isMoveValid = (target) => {
     console.log("currentPiece",piece);
     console.log("startId", startId);
     console.log("targetId", targetId);
+
+    switch(piece) {
+        case "pawn":
+            const goingOneStep = targetId === startId + 8;
+            const goingTwoStep = targetId === startId + 16;
+            const goingSideLeft = targetId === startId + 7;
+            const goingSideRight = targetId === startId + 9;
+            const isThereElementOnTarget = Boolean(document.querySelector(`[chess-box-id="${targetId}"]`).firstChild)
+            if (7 <= startId <= 15) {
+                if(((goingOneStep || goingTwoStep) || !isThereElementOnTarget)) {
+                    return true
+                } else {
+                    return false
+                }
+            } else {
+                if( (goingOneStep && !isThereElementOnTarget ) || (( goingSideLeft )||( goingSideRight )&&isThereElementOnTarget)) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+
+    }
 }

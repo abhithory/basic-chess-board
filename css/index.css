@@ -16,6 +16,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#playerGoBox{
+    color: white;
+    font-size: 30px;
+    font-style: oblique;
 }
 
 #chess-board {
